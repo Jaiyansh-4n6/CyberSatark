@@ -49,3 +49,38 @@ body {
   box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
   transform: translateY(-1px);
 }
+
+
+/* HIDE OUTER SCROLLBAR */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* HIDE SCROLLBARS */
+
+html,
+body {
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.cyber-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.cyber-scroll::-webkit-scrollbar {
+  display: none;
+}

@@ -23,12 +23,12 @@ export default function LearnPage() {
   return (
     <>
       <Navbar />
+      <div className="h-24" />
       <CyberBackground />
 
-      <div className="flex h-screen pt-24 text-gray-300">
-
+      <div className="flex h-screen overflow-hidden pt-24 text-gray-300">
         {/* SIDEBAR */}
-        <aside className="w-80 border-r border-green-500/10 px-6 py-6 overflow-y-auto backdrop-blur-xl bg-black/20">
+        <aside className="cyber-scroll h-full w-80 border-r border-green-500/10 px-6 py-6 overflow-y-auto backdrop-blur-xl bg-black/20">
 
           <h2 className="text-xl font-bold text-green-400 mb-6">
             Phishing Guide
@@ -64,8 +64,7 @@ export default function LearnPage() {
         </aside>
 
         {/* MAIN */}
-        <main className="flex-1 overflow-y-auto px-10 py-8 max-w-5xl mx-auto w-full">
-
+        <main className="cyber-scroll h-full flex-1 overflow-y-auto px-10 py-8 max-w-5xl mx-auto w-full">
           {/* HEADER */}
           <div className="mb-8 p-6 rounded-3xl border border-green-500/20 bg-black/30 backdrop-blur-xl shadow-2xl shadow-green-500/10">
 
