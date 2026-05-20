@@ -2,11 +2,13 @@
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import CyberBackground from "@/components/cyberbackground";
 
 export default function Home() {
   return (
     <>
       <Navbar />
+      <CyberBackground />
 
       {/* Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
