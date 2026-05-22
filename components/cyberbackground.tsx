@@ -4,13 +4,12 @@ export default function CyberBackground() {
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden bg-[#0f1115]">
 
-      {/* MAIN BLUE ENERGY */}
+      {/* PRIMARY BLUE ENERGY */}
       <div
         className="
         absolute
-
-        top-[-20%]
-        left-[15%]
+        top-[-25%]
+        left-[10%]
 
         h-[900px]
         w-[900px]
@@ -19,18 +18,17 @@ export default function CyberBackground() {
 
         bg-blue-500/20
 
-        blur-[160px]
+        blur-[180px]
 
         animate-pulse
       "
       />
 
-      {/* SECONDARY CYAN LIGHT */}
+      {/* CYAN SWIRL */}
       <div
         className="
         absolute
-
-        bottom-[-25%]
+        bottom-[-20%]
         right-[5%]
 
         h-[700px]
@@ -40,52 +38,57 @@ export default function CyberBackground() {
 
         bg-cyan-400/10
 
-        blur-[140px]
+        blur-[150px]
 
         animate-pulse
       "
         style={{
-          animationDuration: "7s",
+          animationDuration: "8s",
         }}
       />
 
-      {/* SWIRLING LIGHT ARC */}
+      {/* SWIRLING RING */}
       <div
         className="
         absolute
 
-        top-[15%]
-        left-[30%]
+        left-1/2
+        top-1/2
 
-        h-[600px]
-        w-[900px]
+        h-[900px]
+        w-[1200px]
+
+        -translate-x-1/2
+        -translate-y-1/2
 
         rotate-[-12deg]
 
         rounded-full
 
-        border-[80px]
+        border-[90px]
         border-blue-400/10
 
         blur-3xl
       "
       />
 
-      {/* DARK VIGNETTE */}
+      {/* CENTER LIGHT */}
       <div
         className="
         absolute inset-0
 
-        bg-[radial-gradient(circle_at_center,transparent_35%,rgba(0,0,0,0.7))]
+        bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_45%)]
+
+        pointer-events-none
       "
       />
 
-      {/* SOFT TOP LIGHT */}
+      {/* TOP LIGHT */}
       <div
         className="
         absolute inset-0
 
-        bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_45%)]
+        bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_40%)]
 
         pointer-events-none
       "
@@ -93,31 +96,21 @@ export default function CyberBackground() {
 
       {/* SUBTLE GRID */}
       <div
-        className="
-        absolute inset-0
-
-        opacity-[0.04]
-      "
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+          backgroundSize: "90px 90px",
         }}
       />
 
-      {/* NOISE TEXTURE */}
+      {/* VIGNETTE */}
       <div
         className="
         absolute inset-0
 
-        opacity-[0.025]
-
-        mix-blend-soft-light
+        bg-[radial-gradient(circle_at_center,transparent_45%,rgba(0,0,0,0.75))]
       "
-        style={{
-          backgroundImage:
-            "url('https://grainy-gradients.vercel.app/noise.svg')",
-        }}
       />
     </div>
   );
