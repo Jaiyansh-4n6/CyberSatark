@@ -1,83 +1,151 @@
-# 🔐 CyberSatark – Phishing Awareness Platform
+# 🔐 CyberSatark – Phishing Awareness & Simulator Platform
 
-**CyberSatark** is a cybersecurity awareness platform developed under the **WiCYS Club** as part of a hackathon initiative to educate users about phishing attacks and social engineering threats.
+<div align="center">
 
-In today’s digital world, a significant number of users fall victim to scams due to limited awareness. CyberSatark addresses this gap by delivering **practical, easy-to-understand learning experiences** that help users recognize and avoid malicious attempts.
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Live-brightgreen?style=for-the-badge&logo=vercel)](https://cybersatark.vercel.app/)
+[![Stars](https://img.shields.io/github/stars/OpenThreatLabs/CyberSatark?style=for-the-badge&color=green)](https://github.com/OpenThreatLabs/CyberSatark/stargazers)
+[![Forks](https://img.shields.io/github/forks/OpenThreatLabs/CyberSatark?style=for-the-badge&color=green)](https://github.com/OpenThreatLabs/CyberSatark/network/members)
+[![Issues](https://img.shields.io/github/issues/OpenThreatLabs/CyberSatark?style=for-the-badge&color=red)](https://github.com/OpenThreatLabs/CyberSatark/issues)
+[![License](https://img.shields.io/github/license/OpenThreatLabs/CyberSatark?style=for-the-badge&color=blue)](LICENSE)
 
----
+**CyberSatark** is a state-of-the-art cybersecurity awareness platform developed under the **WiCYS Club** as a hackathon initiative. It bridges the gap between complex technical threat concepts and everyday internet users through highly interactive, game-based learning experiences.
 
-## 🚀 Overview
+[**🌐 Explore Live Site**](https://cybersatark.vercel.app/) • [**📽️ View Walkthrough**](#-key-features) • [**⚙️ Local Setup**](#-installation-and-setup)
 
-CyberSatark focuses on **real-world digital interactions**—emails, SMS, and social media messages—where phishing attacks most commonly occur. Instead of purely theoretical content, the platform emphasizes:
-
-- Real examples  
-- Hands-on analysis  
-- Interactive learning  
-
-The goal is simple: **build instinctive threat recognition skills** in everyday users.
+</div>
 
 ---
 
-## 🎯 Key Features
+## 🎯 Project Motivation & Impact
 
-### 📧 Real vs Fake Message Examples
-- Compare legitimate and fraudulent emails/messages  
-- Understand subtle differences attackers exploit  
-- Learn patterns used in real phishing campaigns  
+Most security training software is either dry, theoretical, or aimed only at technical staff. **CyberSatark** democratizes security education by placing users directly in simulated real-world scenarios—such as dealing with fake SMS alerts, looking at suspicious login portals, and analyzing web addresses. 
 
-### ✅ Phishing Identification Checklist
-- Step-by-step checklist to analyze suspicious content  
-- Covers:
-  - Sender authenticity  
-  - URL inspection  
-  - Language tone & urgency  
-  - Attachments & links  
+By prioritizing **"Learn-by-Doing"**, CyberSatark helps everyday internet users build instinctive security habits, protecting them from financial fraud, identity theft, and data breaches.
+
+---
+
+## 🚀 Tech Stack
+
+CyberSatark is built using a modern, fast, and highly interactive frontend architecture:
+
+| Category | Technology | Description |
+| :--- | :--- | :--- |
+| **Framework** | ![Next.js](https://img.shields.io/badge/Next.js-16.x-000000?style=flat-square&logo=nextdotjs&logoColor=white) | Server-side rendering, routing, and modern App Router features. |
+| **Language** | ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white) | Strict type safety for solid and bug-free state management. |
+| **UI Library** | ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black) | Component-driven architecture. |
+| **Styling** | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) | Flexible and modern utilities for design systems. |
+| **Animations** | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Interactive-FF00C8?style=flat-square&logo=framer&logoColor=white) | Fluid UI transitions, canvas controls, and micro-interactions. |
+| **Database & Auth** | ![Firebase](https://img.shields.io/badge/Firebase-Auth%20%26%20DB-FFCA28?style=flat-square&logo=firebase&logoColor=black) | Real-time database storage and password-less user auth. |
+
+---
+
+## ✨ Key Features
+
+### 🎭 Phishing Sandbox & Simulators
+Interactive sandboxed screens that mimic popular services. Users must analyze elements (URL, sender domain, language urgency) and flag them:
+*   **Social & Communication**: WhatsApp, Instagram, and Google login simulations.
+*   **Media & Finance**: Netflix subscription alerts, Bank transfer alerts, and fake System popups.
 
 ### 🧠 Interactive Awareness Quiz
-- Test your phishing detection skills  
-- Reinforce learning through scenario-based questions  
-- Immediate feedback for improvement  
+*   Over 400+ scenario-based quiz questions covering Phishing Fundamentals, Password Security, and Social Engineering.
+*   Immediate interactive feedback with detailed explanations for correct and incorrect answers.
+*   Track scores and leaderboard standing.
 
-### 📚 Educational Modules
-- Simplified explanations of:
-  - Phishing attacks  
-  - Social engineering techniques  
-- Designed for beginners and non-technical users  
+### 🔍 Cyber Threat Analysis Tools
+*   **URL Checker**: Inspect URLs for suspicious keywords, misspellings, or unusual domains.
+*   **Password Entropy Analyzer**: Computes real-time entropy scores to determine password complexity against brute-force attacks.
+*   **Email Analyzer**: Explains headers and flags suspicious sender credentials.
 
----
-
-## 👥 Target Audience
-
-CyberSatark is designed for:
-
-- 🎓 Students  
-- 🌐 General internet users  
-- 🧑‍💼 Beginners in cybersecurity  
-- 📱 Anyone using email, SMS, or social platforms  
+### 📚 Bite-Sized Learning Modules
+*   Interactive cybersecurity micro-courses covering various concepts (SMS Phishing, Spear Phishing, Social Engineering) designed for absolute beginners.
 
 ---
 
-## 💡 Why CyberSatark?
+## 📂 Project Architecture
 
-Most awareness platforms are either too technical or too generic. CyberSatark stands out by being:
-
-- **Practical** → Focus on real attack scenarios  
-- **Interactive** → Learn by doing, not just reading  
-- **Accessible** → No prior cybersecurity knowledge required  
-- **User-centric** → Built for everyday digital behavior  
+```filepath
+├── app/                      # Next.js App Router Pages
+│   ├── about/                # Meet the Team and Platform Mission
+│   ├── admin/                # Administrator Panel for Metrics
+│   ├── auth/                 # Sign In / Sign Up Flow (Firebase Auth)
+│   ├── dashboard/            # User Dashboard with Quiz Progress
+│   ├── learn/                # Bite-sized educational courses
+│   ├── quiz/                 # Quiz Engine and Category Selectors
+│   ├── tools/                # Phishing & Security Analysis Tools
+│   │   ├── email-checker/
+│   │   ├── password-analyzer/
+│   │   ├── phishing-analysis/
+│   │   └── url-checker/
+│   ├── globals.css           # Custom Scrollbars, Globals & Animations
+│   └── layout.tsx            # Main root wrapper & providers
+├── components/               # Shared Reusable UI Components
+│   ├── simulation/           # Interactive Phishing Simulators
+│   │   └── popups/           # Individual Brand/Platform Mock Popups
+│   ├── BrandLogo.tsx         # Brand Identity SVGs
+│   ├── cyberbackground.tsx   # Custom animated matrix-glow background
+│   └── Navbar.tsx            # Navigation controls with dynamic active indicators
+├── data/                     # Local Static Datasets (Quizzes, Examples)
+└── lib/                      # Configuration Files (Firebase/Firestore Connection)
+```
 
 ---
 
-## 🛡️ Mission
+## ⚙️ Installation and Setup
 
-To create a safer digital ecosystem by empowering users with the knowledge and confidence to **identify, analyze, and avoid phishing attacks proactively**.
+### Prerequisites
+*   Node.js (v18.x or above)
+*   npm or yarn
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/OpenThreatLabs/CyberSatark.git
+cd CyberSatark
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Setup Environment Variables
+Create a `.env.local` file in the root directory and add your Firebase credentials:
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+### 5. Build for Production
+```bash
+npm run build
+npm run start
+```
 
 ---
 
-## 🏆 Hackathon Context
+## 👥 Contributors
 
-This project was developed as part of a **hackathon under the WiCYS Club**, with the objective of creating a real-world impact solution in the domain of **cybersecurity awareness and user education**.
+Thanks to the following creators for building CyberSatark:
+
+| Contributor | GitHub Profile | Role |
+| :--- | :--- | :--- |
+| **Abhinav Mishra** | [@NotSoAbhinav](https://github.com/NotSoAbhinav) | Full Stack & Systems Integration |
+| **Jaiyansh Dhaulakhandi** | [@Jaiyansh12](https://github.com/Jaiyansh12) | Frontend Lead & UX Developer |
+| **Piyush Kumar** | [@piyushkumar-git](https://github.com/piyushkumar-git) | Database & Auth Integration |
+| **Ritambhar Advait** | [@RitambharAdvait](https://github.com/RitambharAdvait) | Tooling & Password Entropy Algorithmist |
 
 ---
 
-## ⚙️ Tech Stack
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
