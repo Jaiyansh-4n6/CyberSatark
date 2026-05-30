@@ -5,10 +5,11 @@ import MatrixBackground from "@/components/MatrixBackground";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { getUserRole } from "@/lib/db";
+import { getUserRole, saveUserProfile } from "@/lib/db";
 
 export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
@@ -20,7 +21,8 @@ export default function AuthPage() {
 
     try {
       if (mode === "signup") {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await saveUserProfile(cred.user.uid, username || email.split("@")[0], email);
         setMsg("Account created. You can login.");
         setMode("login");
         return;
@@ -44,20 +46,22 @@ export default function AuthPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-6">
+    <main className="min-h-screen flex items-center justify-center px-6 relative z-10">
       <MatrixBackground />
 
-      <div className="w-full max-w-md bg-[#07142a]/80 backdrop-blur-md border border-[#12345c] rounded-2xl shadow-xl p-8">
+      <div className="w-full max-w-md glass-card p-8 space-y-6">
 
-        <h1 className="text-3xl font-bold text-green-400 text-center mb-2">
-          {mode === "login" ? "Login" : "Create Account"}
-        </h1>
+        <div>
+          <h1 className="text-3xl font-black text-green-400 text-center font-mono tracking-tight uppercase">
+            {mode === "login" ? "Login" : "Sign Up"}
+          </h1>
 
-        <p className="text-gray-300 text-center mb-6">
-          {mode === "login"
-            ? "Access your CyberSatark account"
-            : "Join CyberSatark to start learning cybersecurity"}
-        </p>
+          <p className="text-gray-400 text-center text-xs mt-2 font-mono leading-relaxed">
+            {mode === "login"
+              ? "ACCESS_SECURE_CYBERSATARK_CONSOLE"
+              : "REGISTER_NEW_OPERATOR_CREDENTIALS"}
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -65,7 +69,9 @@ export default function AuthPage() {
             <input
               type="text"
               placeholder="Username"
-              className="w-full px-4 py-3 rounded-lg bg-[#020617] border border-[#12345c]"
+              value={username}
+              onChange={(e)=>setUsername(e.target.value)}
+              className="w-full px-4 py-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-green-400/40 backdrop-blur-md transition duration-300 font-mono text-xs"
             />
           )}
 
@@ -74,7 +80,7 @@ export default function AuthPage() {
             placeholder="Email"
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg bg-[#020617] border border-[#12345c]"
+            className="w-full px-4 py-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-green-400/40 backdrop-blur-md transition duration-300 font-mono text-xs"
           />
 
           <input
@@ -82,25 +88,25 @@ export default function AuthPage() {
             placeholder="Password"
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg bg-[#020617] border border-[#12345c]"
+            className="w-full px-4 py-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-green-400/40 backdrop-blur-md transition duration-300 font-mono text-xs"
           />
 
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-green-500 text-black font-semibold hover:bg-green-400 transition"
+            className="w-full py-3.5 rounded-xl bg-green-500 text-black font-bold hover:bg-green-400 transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-400/40 cursor-pointer font-mono text-sm"
           >
-            {mode === "login" ? "Login" : "Sign Up"}
+            {mode === "login" ? "INITIALIZE_SESSION" : "REGISTER_USER"}
           </button>
         </form>
 
         {msg && (
-          <p className="text-sm text-green-300 mt-4 text-center">{msg}</p>
+          <p className="text-xs text-green-300 mt-4 text-center font-mono animate-pulse">{msg}</p>
         )}
 
-        <div className="mt-6 text-sm text-gray-400 space-y-2 text-center">
+        <div className="mt-6 text-xs text-gray-400 space-y-2 text-center font-mono">
 
           {mode === "login" && (
-            <Link href="#" className="block hover:text-green-400">
+            <Link href="/forgot-password" className="block hover:text-green-400 transition">
               Forgot Password?
             </Link>
           )}
@@ -112,24 +118,24 @@ export default function AuthPage() {
               setMode("login");
               setEmail("admin@cybersatark.com");
             }}
-            className="block hover:text-green-400"
+            className="block hover:text-green-400 transition"
           >
-            Admin Login
+            Load Admin Credentials
           </Link>
 
           {mode === "login" ? (
             <button
               onClick={() => setMode("signup")}
-              className="block w-full text-green-400 hover:underline"
+              className="block w-full text-green-400 hover:underline cursor-pointer transition font-mono mt-4"
             >
-              New user? Sign Up
+              // CREATE_NEW_ACCOUNT
             </button>
           ) : (
             <button
               onClick={() => setMode("login")}
-              className="block w-full text-green-400 hover:underline"
+              className="block w-full text-green-400 hover:underline cursor-pointer transition font-mono mt-4"
             >
-              Already have an account? Login
+              // EXISTING_OPERATOR_LOGIN
             </button>
           )}
 

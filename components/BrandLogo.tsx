@@ -1,31 +1,27 @@
 "use client";
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function BrandLogo() {
   return (
-    <Link
-      href="/"
-      style={{
-        position: "fixed",
-        top: "20px",
-        left: "20px",
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        padding: "8px 14px",
-        borderRadius: "999px",
-        border: "1px solid #12345c",
-        background: "rgba(7,20,42,0.8)",
-        backdropFilter: "blur(8px)",
-        boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
-        color: "#22c55e",
-        textDecoration: "none",
-        fontWeight: 600,
-      }}
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      className="fixed top-6 left-6 z-50"
     >
-      <ShieldCheck size={20} />
-      CyberSatark
-    </Link>
+      <Link
+        href="/"
+        className="flex items-center gap-2.5 px-4 py-2.5 rounded-full 
+                   bg-white/[0.02] border border-white/10 backdrop-blur-2xl 
+                   shadow-[0_20px_50px_rgba(0,0,0,0.65)] 
+                   hover:border-green-500/25 transition-all duration-300 group text-decoration-none"
+      >
+        <ShieldCheck size={16} className="text-green-400 group-hover:scale-110 transition-transform duration-300" />
+        <span className="text-[10px] tracking-widest font-mono font-bold text-white uppercase group-hover:text-green-300 transition-colors">
+          CyberSatark
+        </span>
+      </Link>
+    </motion.div>
   );
 }

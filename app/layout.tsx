@@ -3,10 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import ThemeToggle from "@/components/ThemeToggle";
-import BrandLogo from "@/components/BrandLogo";
-import HomeButton from "@/components/HomeButton";
 import PhishingSimulation from "@/components/simulation/PhishingSimulation";
 import Scrollbar from "@/components/Scrollbar";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,8 +34,6 @@ export default function RootLayout({
       >
         <Scrollbar />
 
-        <BrandLogo />
-        <HomeButton />
         <PhishingSimulation />
 
         {children}

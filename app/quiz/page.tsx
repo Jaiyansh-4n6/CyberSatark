@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { quizzes } from "@/data/quizzes";
 import Navbar from "@/components/Navbar";
 import CyberBackground from "@/components/cyberbackground";
 import { motion } from "framer-motion";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { updateUserQuizScore } from "@/lib/db";
 
 type Question = {
   question: string;
@@ -43,6 +46,15 @@ export default function QuizPage() {
 
   const [selectedQuestions, setSelectedQuestions] =
     useState<Question[]>([]);
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // QUIZ SELECTION PAGE
   if (quizIndex === null) {
@@ -119,18 +131,19 @@ export default function QuizPage() {
                       );
                     }}
                     className="
-                      backdrop-blur-xl
-                      bg-black/30
+                      backdrop-blur-[40px]
+                      bg-white/[0.03]
                       border
-                      border-green-500/20
+                      border-white/12
                       rounded-3xl
                       overflow-hidden
-                      shadow-2xl
-                      shadow-green-500/10
+                      shadow-[0_25px_50px_rgba(0,0,0,0.65)]
+                      hover:shadow-green-500/5
                       cursor-pointer
-                      transition
+                      transition-all
+                      duration-300
                       p-8
-                      hover:border-green-400/40
+                      hover:border-green-400/30
                     "
                   >
 
@@ -184,18 +197,19 @@ export default function QuizPage() {
                   );
                 }}
                 className="
-                  backdrop-blur-xl
-                  bg-black/30
+                  backdrop-blur-[40px]
+                  bg-white/[0.03]
                   border
-                  border-green-500/20
+                  border-white/12
                   rounded-3xl
                   overflow-hidden
-                  shadow-2xl
-                  shadow-green-500/10
+                  shadow-[0_25px_50px_rgba(0,0,0,0.65)]
+                  hover:shadow-green-500/5
                   cursor-pointer
-                  transition
+                  transition-all
+                  duration-300
                   p-8
-                  hover:border-green-400/40
+                  hover:border-green-400/30
                   max-w-md
                   w-full
                 "
@@ -237,8 +251,11 @@ export default function QuizPage() {
   const question =
     selectedQuestions[questionIndex];
 
-  function handleAnswer(index: number) {
-    if (index === question.answer) {
+  async function handleAnswer(index: number) {
+    const isCorrect = index === question.answer;
+    const finalScore = score + (isCorrect ? 1 : 0);
+
+    if (isCorrect) {
       setScore(score + 1);
     }
 
@@ -251,6 +268,13 @@ export default function QuizPage() {
       );
     } else {
       setFinished(true);
+      if (user) {
+        try {
+          await updateUserQuizScore(user.uid, finalScore, quiz.title);
+        } catch (error) {
+          console.error("Failed to save score:", error);
+        }
+      }
     }
   }
 
@@ -273,13 +297,12 @@ export default function QuizPage() {
               scale: 1,
             }}
             className="
-              backdrop-blur-xl
-              bg-black/30
+              backdrop-blur-[40px]
+              bg-white/[0.03]
               border
-              border-green-500/20
+              border-white/12
               rounded-3xl
-              shadow-2xl
-              shadow-green-500/10
+              shadow-[0_25px_60px_rgba(0,0,0,0.7)]
               p-10
               text-center
               max-w-xl
@@ -313,6 +336,16 @@ export default function QuizPage() {
                 }}
               />
             </div>
+
+            {user ? (
+              <p className="text-green-400 text-sm mt-6 font-mono">
+                ✓ Score saved to your profile dashboard
+              </p>
+            ) : (
+              <p className="text-yellow-400 text-sm mt-6 font-mono">
+                ⚠ Log in to save quiz scores and track progress
+              </p>
+            )}
 
             <button
               className="
@@ -361,14 +394,13 @@ export default function QuizPage() {
             y: 0,
           }}
           className="
-            backdrop-blur-xl
-            bg-black/30
+            backdrop-blur-[40px]
+            bg-white/[0.03]
             border
-            border-green-500/20
+            border-white/12
             rounded-3xl
             overflow-hidden
-            shadow-2xl
-            shadow-green-500/10
+            shadow-[0_25px_60px_rgba(0,0,0,0.7)]
             max-w-3xl
             w-full
           "
@@ -385,11 +417,11 @@ export default function QuizPage() {
               <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
             </div>
 
-            <p className="text-[11px] uppercase tracking-[0.3em] text-green-400 font-semibold">
+            <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-green-400 font-semibold">
               Cyber Awareness Assessment
             </p>
 
-            <div className="text-[10px] text-gray-600 font-mono">
+            <div className="text-xs text-gray-500 font-mono">
               quiz-engine.ts
             </div>
           </div>
@@ -397,7 +429,7 @@ export default function QuizPage() {
           <div className="p-8">
 
             {/* SCORE BAR */}
-            <div className="flex justify-between mb-4 text-green-400 text-sm font-mono">
+            <div className="flex justify-between mb-4 text-green-400 text-base font-mono font-bold">
               <span>
                 Question{" "}
                 {questionIndex + 1}/10
@@ -422,7 +454,7 @@ export default function QuizPage() {
             </div>
 
             {/* QUESTION */}
-            <h2 className="text-2xl font-semibold text-white leading-relaxed mb-10">
+            <h2 className="text-3xl font-bold text-white leading-relaxed mb-10">
               {question.question}
             </h2>
 
@@ -437,10 +469,10 @@ export default function QuizPage() {
                   <motion.button
                     key={index}
                     whileHover={{
-                      scale: 1.01,
+                      scale: 1.015,
                     }}
                     whileTap={{
-                      scale: 0.99,
+                      scale: 0.985,
                     }}
                     onClick={() =>
                       handleAnswer(index)
@@ -449,14 +481,18 @@ export default function QuizPage() {
                       w-full
                       p-5
                       border
-                      border-green-500/20
+                      border-white/10
                       rounded-2xl
-                      bg-black/20
+                      bg-black/35
                       text-left
                       hover:bg-green-500/10
-                      hover:border-green-400/40
-                      transition
+                      hover:border-green-400/30
+                      transition-all
+                      duration-300
                       text-gray-200
+                      cursor-pointer
+                      font-mono
+                      text-base
                     "
                   >
                     {option}
