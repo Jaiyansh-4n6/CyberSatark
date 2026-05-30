@@ -58,6 +58,7 @@ Interactive sandboxed screens that mimic popular services. Users must analyze el
 
 ### 📚 Bite-Sized Learning Modules
 *   Interactive cybersecurity micro-courses covering various concepts (SMS Phishing, Spear Phishing, Social Engineering) designed for absolute beginners.
+*   **Adaptive Viewport Navigation**: A scroll-dependent fixed navbar driving synchronized ease transitions that dynamically collapses screen margins to maximize readable real-estate on active learning HUD consoles.
 
 ---
 
