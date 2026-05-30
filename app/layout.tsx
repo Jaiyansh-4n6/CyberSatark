@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import ThemeToggle from "@/components/ThemeToggle";
 import PhishingSimulation from "@/components/simulation/PhishingSimulation";
 import Scrollbar from "@/components/Scrollbar";
 
@@ -37,8 +36,6 @@ export default function RootLayout({
         <PhishingSimulation />
 
         {children}
-
-        <ThemeToggle />
       </body>
     </html>
   );

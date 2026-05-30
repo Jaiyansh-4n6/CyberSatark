@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import CyberBackground from "@/components/cyberbackground";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,7 +21,8 @@ import {
   Server,
   FileCode,
   AlertCircle,
-  Radio
+  Radio,
+  ArrowLeft
 } from "lucide-react";
 
 type Verdict =
@@ -409,6 +411,17 @@ export default function URLChecker() {
 
       <main className="min-h-screen px-6 py-28 text-white relative z-10 max-w-7xl mx-auto w-full">
         
+        {/* BACK TO TOOLS LINK */}
+        <div className="mb-6">
+          <Link
+            href="/tools"
+            className="inline-flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-green-400 transition-colors duration-200 uppercase tracking-widest group"
+          >
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform duration-200" />
+            <span>Back to Security Tools</span>
+          </Link>
+        </div>
+
         {/* TWO-COLUMN CYBER FORENSICS CONSOLE GRID */}
         <div className="grid lg:grid-cols-12 gap-8 items-start">
 

@@ -76,10 +76,10 @@ const toolsData = [
   {
     title: "Threat Intelligence",
     description:
-      "Advanced threat intelligence and malware analysis modules coming soon.",
-    href: "#",
+      "Analyze suspicious file hashes, malware signatures, IP addresses, and DNS domains using VirusTotal registries.",
+    href: "/tools/threat-intelligence",
     icon: BugOff,
-    status: "Coming Soon",
+    status: "Active",
     category: "ANALYSIS",
     telemetryId: "INTELLIGENCE_01",
     color: "purple",

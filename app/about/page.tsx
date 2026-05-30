@@ -3,207 +3,324 @@
 import Navbar from "@/components/Navbar";
 import CyberBackground from "@/components/cyberbackground";
 import { motion } from "framer-motion";
-import { Github, Linkedin } from "lucide-react";
+import { Github, Linkedin, Target, Cpu, Shield, Activity, Terminal, Globe } from "lucide-react";
 
 export default function AboutPage() {
+  const teamMembers = [
+    {
+      name: "Abhinav Mishra",
+      github: "https://github.com/NotSoAbhinav",
+      linkedin: "https://www.linkedin.com/in/notsoabhinav/",
+      comPort: "COM_PORT_01",
+    },
+    {
+      name: "Jaiyansh Dhaulakhandi",
+      github: "https://github.com/Jaiyansh12",
+      linkedin: "https://www.linkedin.com/in/jaiyansh-4n6/",
+      comPort: "COM_PORT_02",
+    },
+    {
+      name: "Ritambhar Advait",
+      github: "https://github.com/RitambharAdvait",
+      linkedin: "https://www.linkedin.com/in/ritambhar-advait-0b3b2137b/",
+      comPort: "COM_PORT_03",
+    },
+    {
+      name: "Piyush Kumar",
+      github: "https://github.com/piyushkumar-git",
+      linkedin: "https://www.linkedin.com/in/piyush-kumar-4223ba231/",
+      comPort: "COM_PORT_04",
+    },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   return (
     <>
       <Navbar />
       <CyberBackground />
 
-      <style jsx global>{`
-        .highlight-hover {
-          transition: all 0.3s ease;
+      {/* INJECT ANIMATION KEYFRAMES */}
+      <style>{`
+        @keyframes scanline {
+          0% { top: -5%; }
+          50% { top: 105%; }
+          100% { top: -5%; }
         }
-
-        .highlight-hover:hover {
-          color: #00ff99;
-          text-shadow: 0 0 12px rgba(0, 255, 153, 0.9);
-          letter-spacing: 0.5px;
+        @keyframes sweep {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
       `}</style>
 
-      <div className="px-8 py-32 max-w-6xl mx-auto space-y-32 text-white">
+      <div className="relative min-h-screen overflow-hidden">
+        {/* LIQUID GLASS REFRACTIVE BACKGROUND BLOBS */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+          <motion.div
+            animate={{
+              x: [0, 40, -20, 0],
+              y: [0, -60, 40, 0],
+              scale: [1, 1.15, 0.9, 1],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-[20%] left-[10%] w-[350px] h-[350px] rounded-full bg-green-500/10 blur-[120px]"
+          />
+          <motion.div
+            animate={{
+              x: [0, -50, 30, 0],
+              y: [0, 50, -40, 0],
+              scale: [1, 0.9, 1.1, 1],
+            }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-[45%] right-[10%] w-[400px] h-[400px] rounded-full bg-emerald-500/8 blur-[130px]"
+          />
+          <motion.div
+            animate={{
+              x: [0, 30, -30, 0],
+              y: [0, 40, 50, 0],
+            }}
+            transition={{
+              duration: 22,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute bottom-[10%] left-[25%] w-[380px] h-[380px] rounded-full bg-green-400/5 blur-[120px]"
+          />
+        </div>
 
-        {/* HERO */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center space-y-6"
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-green-400 cursor-pointer">
-            <motion.span
-              className="highlight-hover"
-              animate={{
-                textShadow: [
-                  "0 0 6px rgba(34,197,94,0.4)",
-                  "0 0 18px rgba(34,197,94,1)",
-                  "0 0 6px rgba(34,197,94,0.4)",
-                ],
-              }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-              }}
+        <div className="px-6 py-28 max-w-6xl mx-auto space-y-24 text-white relative z-10">
+          
+          {/* HERO TITLE PANEL */}
+          <motion.section
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center space-y-4 relative"
+          >
+            {/* Tactical Overlay */}
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
+              <span className="text-[10px] text-green-400 font-mono tracking-widest uppercase font-bold">
+                SYS_INFO // INTEL_TELEMETRY // V2.6
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-black font-mono tracking-wide uppercase text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-250 to-gray-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+              About <span className="text-green-400">OpenThreatLabs</span>
+            </h1>
+
+            <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed font-sans pt-2">
+              OpenThreatLabs is a security research and development collective. CyberSatark 
+              is our flagship AI-powered phishing awareness platform built to strengthen 
+              human judgment through intelligent detection systems and immersive simulations.
+            </p>
+          </motion.section>
+
+          {/* MISSION & APPROACH GRID */}
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid md:grid-cols-2 gap-8"
+          >
+            {/* MISSION CARD */}
+            <motion.div 
+              variants={itemVariants}
+              className="group relative rounded-[28px] border border-white/10 bg-white/[0.02] backdrop-blur-[35px] saturate-[1.6] p-8 hover:border-green-500/25 hover:bg-white/[0.04] transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.65)] overflow-hidden"
             >
-              About CyberSatark
-            </motion.span>
-          </h1>
+              {/* Liquid Sheen Highlight */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute -inset-y-12 -inset-x-0 w-[50%] bg-gradient-to-r from-transparent via-white/[0.03] to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[250%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
 
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            CyberSatark is an AI-powered phishing awareness
-            platform built to strengthen human judgment
-            through intelligent detection systems and
-            immersive cybersecurity simulations.
-          </p>
-        </motion.section>
+              {/* Corner Crosshairs */}
+              <div className="absolute top-3 left-3 text-white/10 font-mono text-[9px] pointer-events-none select-none">+</div>
+              <div className="absolute bottom-3 right-3 text-white/10 font-mono text-[9px] pointer-events-none select-none">+</div>
+              
+              <div className="flex items-center gap-3.5 border-b border-white/5 pb-4 mb-4">
+                <div className="p-2.5 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400">
+                  <Target size={20} />
+                </div>
+                <div>
+                  <span className="text-[9px] text-gray-500 font-mono uppercase tracking-widest block">CORE_PILLARS</span>
+                  <h2 className="text-xl font-black font-mono uppercase tracking-wider text-white group-hover:text-green-300 transition-colors">
+                    Our Mission
+                  </h2>
+                </div>
+              </div>
 
-        {/* MISSION + APPROACH */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-16"
-        >
+              <p className="text-sm text-gray-400 leading-relaxed font-sans">
+                To develop open-source intelligence utilities and training systems that protect the digital commons. 
+                By merging straightforward diagnostics with practical training, we empower individuals to transform 
+                from passive observers into active defenders against social engineering vectors.
+              </p>
+            </motion.div>
 
-          {/* MISSION */}
-          <div className="space-y-5 rounded-3xl border border-green-500/20 bg-black/30 backdrop-blur-xl p-8 shadow-2xl shadow-green-500/10">
+            {/* APPROACH CARD */}
+            <motion.div 
+              variants={itemVariants}
+              className="group relative rounded-[28px] border border-white/10 bg-white/[0.02] backdrop-blur-[35px] saturate-[1.6] p-8 hover:border-green-500/25 hover:bg-white/[0.04] transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.65)] overflow-hidden"
+            >
+              {/* Liquid Sheen Highlight */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute -inset-y-12 -inset-x-0 w-[50%] bg-gradient-to-r from-transparent via-white/[0.03] to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[250%] transition-transform duration-[1200ms] ease-out pointer-events-none" />
 
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+              {/* Corner Crosshairs */}
+              <div className="absolute top-3 left-3 text-white/10 font-mono text-[9px] pointer-events-none select-none">+</div>
+              <div className="absolute bottom-3 right-3 text-white/10 font-mono text-[9px] pointer-events-none select-none">+</div>
+              
+              <div className="flex items-center gap-3.5 border-b border-white/5 pb-4 mb-4">
+                <div className="p-2.5 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400">
+                  <Cpu size={20} />
+                </div>
+                <div>
+                  <span className="text-[9px] text-gray-500 font-mono uppercase tracking-widest block">STRATEGY_DECK</span>
+                  <h2 className="text-xl font-black font-mono uppercase tracking-wider text-white group-hover:text-green-300 transition-colors">
+                    Our Approach
+                  </h2>
+                </div>
+              </div>
+
+              <p className="text-sm text-gray-400 leading-relaxed font-sans">
+                We leverage multi-layered verification engines (incorporating email header forensics, domain registry checks, 
+                and URL structure analyzes) combined with interactive threat scenario simulators to make security learning 
+                approachable, intuitive, and effective.
+              </p>
+            </motion.div>
+          </motion.section>
+
+          {/* TEAM DOSSIER CARDS SECTION */}
+          <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center space-y-12"
+          >
+            <div className="space-y-2">
+              <span className="text-[10px] text-green-400 font-mono tracking-widest uppercase block font-bold">
+                // TEAM_CREDENTIALS_DUMP
+              </span>
+              <h2 className="text-2xl md:text-3xl font-black font-mono uppercase tracking-wider text-white">
+                OpenThreatLabs Core Team
+              </h2>
             </div>
 
-            <h2 className="text-3xl font-semibold text-green-400 highlight-hover cursor-pointer border-b border-green-500/20 pb-3">
-              Our Mission
-            </h2>
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+            >
+              {teamMembers.map((member, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  whileHover={{
+                    y: -8,
+                    borderColor: "rgba(74, 222, 128, 0.35)",
+                    boxShadow: "0 30px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(74, 222, 128, 0.08)"
+                  }}
+                  className="flex flex-col items-center p-6 rounded-[24px] border border-white/10 bg-white/[0.02] backdrop-blur-[25px] saturate-[1.6] shadow-[0_20px_40px_rgba(0,0,0,0.55)] transition-all duration-500 relative overflow-hidden group select-none h-[280px] justify-between text-center"
+                >
+                  {/* Liquid Sheen Highlight */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.015] via-transparent to-transparent opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute -inset-y-12 -inset-x-0 w-[50%] bg-gradient-to-r from-transparent via-white/[0.02] to-transparent skew-x-12 translate-x-[-150%] group-hover:translate-x-[250%] transition-transform duration-1000 ease-out pointer-events-none" />
 
-            <p className="text-gray-300 leading-relaxed">
-              To transform passive internet users into
-              proactive cyber defenders by combining
-              machine learning intelligence with real-world
-              awareness training.
-            </p>
-          </div>
+                  {/* Laser Scanline */}
+                  <div className="absolute left-0 right-0 h-[2px] bg-green-500/40 shadow-[0_0_8px_rgba(34,197,94,0.6)] top-0 opacity-0 group-hover:opacity-100 group-hover:animate-[scanline_2.2s_ease-in-out_infinite] pointer-events-none" />
 
-          {/* APPROACH */}
-          <div className="space-y-5 rounded-3xl border border-green-500/20 bg-black/30 backdrop-blur-xl p-8 shadow-2xl shadow-green-500/10">
+                  {/* Cyber Hover Grid Overlay */}
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(34,197,94,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.015)_1px,transparent_1px)] bg-[size:10px_10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-            </div>
+                  {/* Corner bracket focus frame on cards */}
+                  <div className="absolute top-0 left-0 w-3.5 h-3.5 border-t-2 border-l-2 border-white/10 group-hover:border-green-500 transition-colors pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-3.5 h-3.5 border-t-2 border-r-2 border-white/10 group-hover:border-green-500 transition-colors pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-3.5 h-3.5 border-b-2 border-l-2 border-white/10 group-hover:border-green-500 transition-colors pointer-events-none" />
+                  <div className="absolute bottom-0 right-0 w-3.5 h-3.5 border-b-2 border-r-2 border-white/10 group-hover:border-green-500 transition-colors pointer-events-none" />
 
-            <h2 className="text-3xl font-semibold text-green-400 highlight-hover cursor-pointer border-b border-green-500/20 pb-3">
-              Our Approach
-            </h2>
+                  {/* Dossier Code Accents */}
+                  <div className="absolute top-3.5 right-3.5 font-mono text-[9px] text-gray-600 group-hover:text-green-400 transition-colors">
+                    {member.comPort.split("_")[2]}
+                  </div>
+                  
+                  {/* AVATAR FRAME */}
+                  <div className="relative mb-4 mt-2">
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden bg-black/45 z-10">
+                      <img
+                        src={`https://github.com/${member.github.split("/").pop()}.png`}
+                        alt={member.name}
+                        className="w-full h-full rounded-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    
+                    {/* Online Status LED Indicator */}
+                    <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border border-black shadow-[0_0_6px_rgba(34,197,94,0.8)] animate-pulse z-20" />
+                  </div>
 
-            <p className="text-gray-300 leading-relaxed">
-              We integrate rule-based analysis, AI-driven
-              classification, behavioral profiling, and
-              simulation-based education to create a
-              multi-layered cybersecurity ecosystem.
-            </p>
-          </div>
-        </motion.section>
+                  {/* NAME */}
+                  <div className="space-y-1 text-center w-full">
+                    <h3 className="text-white font-mono font-bold text-sm tracking-wider uppercase group-hover:text-green-400 transition-colors">
+                      {member.name}
+                    </h3>
+                    <span className="text-[8px] font-mono text-gray-550 group-hover:text-green-500/50 transition-colors block mt-0.5 text-gray-500">
+                      {member.comPort}
+                    </span>
+                  </div>
 
-        {/* TEAM */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center space-y-12"
-        >
+                  {/* SOCIAL CONTROL TRIGGERS */}
+                  <div className="flex gap-2.5 relative z-10 w-full justify-center pt-3 border-t border-white/5 mt-2">
+                    <a
+                      href={member.github}
+                      target="_blank"
+                      className="p-1.5 rounded-lg bg-black/60 border border-white/5 text-gray-400 hover:text-green-400 hover:border-green-500/20 transition duration-300 shadow-inner"
+                    >
+                      <Github size={15} />
+                    </a>
 
-          <h2 className="text-3xl font-semibold text-green-400 highlight-hover cursor-pointer">
-            Team Error404
-          </h2>
-
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
-
-            {[
-              {
-                name: "Abhinav Mishra",
-                github:
-                  "https://github.com/NotSoAbhinav",
-                linkedin:
-                  "https://www.linkedin.com/in/notsoabhinav/",
-              },
-              {
-                name: "Jaiyansh Dhaulakhandi",
-                github:
-                  "https://github.com/Jaiyansh12",
-                linkedin:
-                  "https://www.linkedin.com/in/jaiyansh-4n6/",
-              },
-              {
-                name: "Ritambhar Advait",
-                github:
-                  "https://github.com/RitambharAdvait",
-                linkedin:
-                  "https://www.linkedin.com/in/ritambhar-advait-0b3b2137b/",
-              },
-              {
-                name: "Piyush Kumar",
-                github:
-                  "https://github.com/piyushkumar-git",
-                linkedin:
-                  "https://www.linkedin.com/in/piyush-kumar-4223ba231/",
-              },
-            ].map((member, index) => (
-              <motion.div
-                key={index}
-                whileHover={{
-                  y: -6,
-                  scale: 1.02,
-                }}
-                className="flex flex-col items-center p-6 rounded-3xl bg-black/30 backdrop-blur-xl border border-green-500/20 hover:shadow-green-400/20 hover:shadow-2xl transition duration-300"
-              >
-
-                {/* AVATAR */}
-                <div className="relative mb-4">
-                  <div className="absolute inset-0 blur-2xl bg-green-500/10 rounded-full"></div>
-
-                  <img
-                    src={`https://github.com/${
-                      member.github
-                        .split("/")
-                        .pop()
-                    }.png`}
-                    alt={member.name}
-                    className="relative w-20 h-20 rounded-full border-2 border-green-400 object-cover hover:scale-110 transition duration-300 shadow-lg shadow-green-500/20"
-                  />
-                </div>
-
-                {/* NAME */}
-                <h3 className="text-white font-medium mb-3 highlight-hover cursor-pointer">
-                  {member.name}
-                </h3>
-
-                {/* SOCIALS */}
-                <div className="flex gap-4">
-
-                  <a
-                    href={member.github}
-                    target="_blank"
-                    className="p-2 rounded-xl bg-black/40 border border-green-500/10 text-gray-400 hover:text-green-400 hover:border-green-400/30 transition"
-                  >
-                    <Github size={20} />
-                  </a>
-
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    className="p-2 rounded-xl bg-black/40 border border-green-500/10 text-gray-400 hover:text-green-400 hover:border-green-400/30 transition"
-                  >
-                    <Linkedin size={20} />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      className="p-1.5 rounded-lg bg-black/60 border border-white/5 text-gray-400 hover:text-green-400 hover:border-green-500/20 transition duration-300 shadow-inner"
+                    >
+                      <Linkedin size={15} />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.section>
+        </div>
       </div>
     </>
   );

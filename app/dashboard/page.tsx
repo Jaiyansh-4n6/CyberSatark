@@ -16,7 +16,8 @@ import {
   Radio, 
   RefreshCw, 
   CheckCircle2, 
-  AlertTriangle 
+  AlertTriangle,
+  Globe
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import CyberBackground from "@/components/cyberbackground";
@@ -35,6 +36,9 @@ export default function DashboardPage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  
+  // Dashboard Profile Dropdown Menu State
+  const [showMenu, setShowMenu] = useState(false);
 
   // Diagnostics Scan Simulator State
   const [scanState, setScanState] = useState<"idle" | "scanning" | "done">("idle");
@@ -114,7 +118,7 @@ export default function DashboardPage() {
       <Navbar />
       <CyberBackground />
 
-      <main className="min-h-screen px-6 py-12 text-white relative z-10 max-w-7xl mx-auto w-full space-y-8">
+      <main className="min-h-screen px-6 py-28 text-white relative z-10 max-w-7xl mx-auto w-full space-y-8">
         
         {/* TACTICAL DIAGNOSTIC TOP HUD */}
         <section className="grid lg:grid-cols-4 gap-6">
@@ -127,9 +131,43 @@ export default function DashboardPage() {
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
                 SEC_CONSOLE_ONLINE
               </p>
-              <h1 className="text-5xl font-black mt-4 tracking-tight text-white font-mono uppercase">
-                {profile.username} <span className="text-green-400">HUD</span>
-              </h1>
+              
+              <div className="relative inline-block mt-4">
+                <button
+                  onClick={() => setShowMenu(prev => !prev)}
+                  className="flex items-center gap-3.5 cursor-pointer bg-transparent border-none text-left p-0 group"
+                >
+                  <div className="w-12 h-12 rounded-full border border-green-500/30 bg-green-500/10 flex items-center justify-center text-green-400 font-mono font-bold text-xl shadow-[0_0_12px_rgba(74,222,128,0.15)] group-hover:bg-green-500/20 group-hover:border-green-400/60 transition-all duration-300 overflow-hidden">
+                    {profile.photoURL ? (
+                      <img src={profile.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      (profile.username || "user").charAt(0).toUpperCase()
+                    )}
+                  </div>
+                  <span className="text-4xl md:text-5xl font-black tracking-tight text-white font-mono uppercase group-hover:text-green-400 transition-colors flex items-center gap-1.5">
+                    HUD
+                    <span className="text-xs opacity-50 font-normal tracking-widest text-gray-500 font-mono self-end pb-2">▼</span>
+                  </span>
+                </button>
+
+                {showMenu && (
+                  <div className="absolute left-0 mt-2 bg-[#07142a]/95 backdrop-blur-3xl border border-white/10 rounded-xl shadow-2xl p-2 w-52 z-30 font-mono text-xs text-white">
+                    <button
+                      onClick={() => setShowMenu(false)}
+                      className="w-full text-left px-3 py-2.5 rounded-lg transition-colors cursor-pointer bg-green-500/10 text-green-400 border border-green-500/20 font-bold"
+                    >
+                      Security Console (HUD)
+                    </button>
+                    <Link
+                      href="/profile"
+                      className="block w-full text-left px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5 text-gray-400 mt-1 font-bold"
+                    >
+                      Profile
+                    </Link>
+                  </div>
+                )}
+              </div>
+
               <p className="text-gray-200 mt-4 text-base leading-relaxed max-w-md font-mono">
                 System operator dashboard interface. Monitor real-time quiz evaluations, diagnostic checks, sandbox logs, and security indices.
               </p>
@@ -150,7 +188,7 @@ export default function DashboardPage() {
           {/* ACTIVE RADIAL SECURITY SCORE GAUGE USING HEROUI */}
           <div className="glass-card p-6 flex flex-col items-center justify-center text-center relative overflow-hidden group hover:border-green-500/20">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-            <p className="text-gray-355 text-gray-400 font-mono text-sm uppercase tracking-wider mb-4 font-bold">SECURITY_INDEX</p>
+            <p className="text-gray-400 font-mono text-sm uppercase tracking-wider mb-4 font-bold">SECURITY_INDEX</p>
             
             <div className="relative w-36 h-36 flex items-center justify-center">
               <ProgressCircle value={score} aria-label="Security Index">
@@ -209,238 +247,213 @@ export default function DashboardPage() {
 
         </section>
 
-        {/* INTERACTIVE SCANNER & DYNAMIC CONSOLE SECTION */}
-        <section className="grid lg:grid-cols-3 gap-8">
-          
-          {/* INTERACTIVE SYSTEM SCANNER TERMINAL */}
-          <div className="lg:col-span-2 glass-card p-6 flex flex-col h-[480px] relative overflow-hidden group hover:border-green-500/20">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500/20 via-green-400/30 to-green-500/20" />
+        {/* INTERACTIVE DIAGNOSTICS TERMINAL & QUICK STATISTICS */}
+        <section className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 glass-card p-6 flex flex-col justify-between relative overflow-hidden group hover:border-green-500/20 transition-all duration-300">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500/25 via-blue-400/20 to-green-500/25" />
             
-            <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+              <span className="text-gray-300 font-mono text-sm uppercase tracking-wider flex items-center gap-2 font-bold">
                 <Terminal size={16} className="text-green-400" />
-                <h2 className="text-lg font-bold text-white font-mono uppercase tracking-wide">
-                  Tactical Diagnostics System Audit
-                </h2>
+                TACTICAL_DIAGNOSTIC_TERMINAL
+              </span>
+              <div className="flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full ${scanState === "scanning" ? "bg-yellow-400 animate-pulse" : scanState === "done" ? "bg-green-400" : "bg-gray-500"}`} />
+                <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+                  {scanState === "scanning" ? "SCANNING..." : scanState === "done" ? "SYSTEM_READY" : "OFFLINE"}
+                </span>
               </div>
-              
-              <Button 
-                onPress={startScan}
-                isDisabled={scanState === "scanning"}
-                variant="outline"
-                className="font-mono text-sm tracking-wider uppercase border border-green-500/20 font-bold px-5 py-2.5 rounded-xl hover:bg-green-500 hover:text-black shadow-lg shadow-green-500/10 cursor-pointer flex items-center gap-1.5"
+            </div>
+
+            <div className="space-y-4 flex-1">
+              <p className="text-xs text-gray-400 font-mono leading-relaxed">
+                Execute a diagnostic integrity sweep of your session, security clearance, password hashes, and active modules.
+              </p>
+
+              {/* TERMINAL DISPLAY SCREEN */}
+              <div className="bg-black/60 rounded-xl border border-white/5 p-4 font-mono text-[11px] h-48 overflow-y-auto space-y-1.5 custom-scrollbar text-green-400/80">
+                {scanLogs.length === 0 ? (
+                  <p className="text-gray-500 italic">// Awaiting scan initialization command...</p>
+                ) : (
+                  scanLogs.map((log, index) => (
+                    <p key={index} className="leading-relaxed break-all">
+                      {log}
+                    </p>
+                  ))
+                )}
+                {scanState === "scanning" && (
+                  <div className="flex items-center gap-2 text-yellow-400 animate-pulse mt-2">
+                    <Loader2 size={12} className="animate-spin" />
+                    <span>RUNNING DIAGNOSTIC CORRELATIONS ({scanProgress}%)</span>
+                  </div>
+                )}
+                {scanState === "done" && (
+                  <p className="text-green-400 font-bold mt-2">
+                    [+] SYSTEM INTEGRITY SECURED. THREAT INDEX: 0.00%
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* CONTROL ROW */}
+            <div className="mt-4 flex flex-col sm:flex-row items-center gap-4 border-t border-white/5 pt-4">
+              <button
+                onClick={startScan}
+                disabled={scanState === "scanning"}
+                className={`w-full sm:w-auto px-5 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition duration-300 ${
+                  scanState === "scanning"
+                    ? "bg-white/5 text-gray-500 border border-white/5 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600 text-black shadow-lg shadow-green-500/10 cursor-pointer"
+                }`}
               >
                 {scanState === "scanning" ? (
                   <>
-                    <Loader2 className="animate-spin text-green-400 h-3.5 w-3.5" />
-                    <span>RUNNING_AUDIT ({scanProgress}%)</span>
+                    <Loader2 size={12} className="animate-spin" />
+                    <span>Scanning...</span>
                   </>
                 ) : (
                   <>
                     <RefreshCw size={12} />
-                    <span>INITIALIZE_SYSTEM_AUDIT</span>
+                    <span>Run Diagnostic Sweep</span>
                   </>
                 )}
-              </Button>
-            </div>
+              </button>
 
-            {/* CONSOLE DISPLAY */}
-            <div className="flex-1 bg-black/45 rounded-2xl border border-white/5 p-5 font-mono text-sm text-green-300 overflow-y-auto space-y-2.5 custom-scrollbar shadow-inner select-text">
-              {scanLogs.length > 0 ? (
-                scanLogs.map((log, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, x: -5 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-start gap-2"
-                  >
-                    <span className="text-green-500 font-semibold">[SEC_AUDIT]</span>
-                    <span>{log}</span>
-                  </motion.div>
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-2 text-sm">
-                  <Terminal size={24} className="opacity-40" />
-                  <p>// DIRECTIVE: Run SYSTEM_AUDIT to test security layer controls.</p>
-                </div>
-              )}
               {scanState === "scanning" && (
-                <div className="flex items-center gap-1 text-green-400 animate-pulse mt-2">
-                  <span>●</span>
-                  <span>Scanning active...</span>
+                <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden border border-white/10">
+                  <div 
+                    className="bg-green-500 h-full transition-all duration-300"
+                    style={{ width: `${scanProgress}%` }}
+                  />
                 </div>
               )}
             </div>
           </div>
 
-          {/* DYNAMIC RECENT ACTIVITY LOGS */}
-          <div className="glass-card p-6 flex flex-col h-[480px] relative overflow-hidden group hover:border-green-500/20">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent" />
-            <div className="flex items-center gap-3 mb-6">
-              <Activity className="text-blue-400" size={18} />
-              <h2 className="text-base font-bold text-white font-mono tracking-wide uppercase">
-                Platform Activity Log Feed
-              </h2>
+          {/* QUICK STATISTICS HUD */}
+          <div className="glass-card p-6 flex flex-col justify-between relative overflow-hidden group hover:border-green-500/20 transition-all duration-300">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500/20 via-cyan-400/20 to-blue-500/20" />
+            
+            <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+              <span className="text-gray-300 font-mono text-sm uppercase tracking-wider flex items-center gap-2 font-bold">
+                <Activity size={16} className="text-blue-400" />
+                SECURITY_TELEMETRY
+              </span>
+              <span className="text-[10px] font-mono text-gray-500">STATS_LOG</span>
             </div>
 
-            <div className="space-y-4 overflow-y-auto pr-2 flex-1 custom-scrollbar">
-              {profile.activities && profile.activities.length > 0 ? (
-                profile.activities.map((act, index) => (
-                  <div key={index} className="border border-white/5 rounded-xl p-4 bg-black/35 backdrop-blur-sm hover:border-green-500/10 transition duration-300">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-sm text-green-400 font-mono">[{act.type}]</span>
-                      <span className="text-xs text-gray-400 font-mono">
-                        {new Date(act.timestamp).toLocaleTimeString()}
-                      </span>
-                    </div>
-                    <p className="text-base text-gray-200 mt-2 font-mono">{act.details}</p>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-400 font-mono text-base py-4 text-center">// NO_LOGS_AVAILABLE</p>
-              )}
+            <div className="grid grid-cols-2 gap-4 py-2 font-mono text-xs">
+              <div className="bg-black/30 border border-white/5 rounded-xl p-3">
+                <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Quizzes Taken</span>
+                <span className="text-white font-bold text-lg">{profile.stats.quizCount}</span>
+              </div>
+              <div className="bg-black/30 border border-white/5 rounded-xl p-3">
+                <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Top Score</span>
+                <span className="text-cyan-400 font-bold text-lg">{profile.stats.highestScore} / 10</span>
+              </div>
+              <div className="bg-black/30 border border-white/5 rounded-xl p-3 col-span-2">
+                <span className="text-gray-500 block text-[9px] uppercase tracking-wider">Average Compliance Index</span>
+                <span className="text-green-400 font-bold text-lg">{profile.stats.averageScore}%</span>
+              </div>
             </div>
+
+            <Link
+              href="/profile"
+              className="mt-4 w-full text-center px-4 py-2.5 rounded-xl border border-white/10 hover:border-green-500/20 hover:bg-white/[0.02] text-xs font-mono font-bold uppercase tracking-wider transition duration-300 block"
+            >
+              Access Profile Dossier
+            </Link>
           </div>
-
         </section>
 
-        {/* METRICS & QUICK ACCESS GRID */}
-        <section className="grid lg:grid-cols-3 gap-8">
+        {/* LAUNCHPAD DEPLOY MODULES */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold font-mono tracking-widest text-white uppercase flex items-center gap-2">
+            <span className="w-1.5 h-3 bg-green-500 inline-block animate-pulse" />
+            OPERATIONAL_TACTICAL_MODULES
+          </h2>
           
-          {/* TRAINING METRICS */}
-          <div className="glass-card p-6 flex flex-col justify-between h-[400px] relative overflow-hidden group hover:border-green-500/20">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-            <div className="flex items-center gap-3 mb-6">
-              <Shield className="text-cyan-400" size={18} />
-              <h2 className="text-base font-bold text-white font-mono tracking-wide uppercase">
-                Active Training Diagnostics
-              </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="glass-card p-6 flex flex-col justify-between min-h-[180px] relative group hover:border-green-500/20 transition duration-300">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <Globe className="text-blue-400" size={20} />
+                  <span className="text-[9px] font-mono text-gray-500">SCANNER_01</span>
+                </div>
+                <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider">URL Threat Scanner</h3>
+                <p className="text-xs text-gray-400 mt-2 font-sans leading-relaxed">
+                  Inspect suspected links against risk logs and domain reputation registers.
+                </p>
+              </div>
+              <Link 
+                href="/tools/url-checker"
+                className="mt-4 text-xs font-mono font-bold text-green-400 hover:text-green-300 flex items-center gap-1 uppercase"
+              >
+                <span>Deploy Module</span>
+                <span>→</span>
+              </Link>
             </div>
 
-            <div className="space-y-6 flex-1 justify-center flex flex-col font-mono text-sm">
+            <div className="glass-card p-6 flex flex-col justify-between min-h-[180px] relative group hover:border-green-500/20 transition duration-300">
               <div>
-                <div className="flex justify-between mb-2 text-sm">
-                  <span className="text-gray-400">QUIZZES_EVALUATED</span>
-                  <span className="font-bold text-green-400 font-mono text-base">{profile.stats.quizCount}</span>
+                <div className="flex items-center justify-between mb-4">
+                  <Mail className="text-cyan-400" size={20} />
+                  <span className="text-[9px] font-mono text-gray-500">SCANNER_02</span>
                 </div>
-
-                <ProgressBar
-                  aria-label="Quizzes Evaluated"
-                  value={Math.min(100, profile.stats.quizCount * 10)}
-                  className="w-full mt-1.5"
-                >
-                  <ProgressBar.Track className="bg-black/45 border border-white/5 h-2.5 rounded-full overflow-hidden">
-                    <ProgressBar.Fill className="bg-gradient-to-r from-blue-600 to-blue-400 h-full" />
-                  </ProgressBar.Track>
-                </ProgressBar>
+                <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider">Phishing Analyzer</h3>
+                <p className="text-xs text-gray-400 mt-2 font-sans leading-relaxed">
+                  Scan suspicious email body contents for heuristic flags and social engineering indicators.
+                </p>
               </div>
+              <Link 
+                href="/tools/phishing-analysis"
+                className="mt-4 text-xs font-mono font-bold text-green-400 hover:text-green-300 flex items-center gap-1 uppercase"
+              >
+                <span>Deploy Module</span>
+                <span>→</span>
+              </Link>
+            </div>
 
+            <div className="glass-card p-6 flex flex-col justify-between min-h-[180px] relative group hover:border-green-500/20 transition duration-300">
               <div>
-                <div className="flex justify-between mb-2 text-sm">
-                  <span className="text-gray-400">PEAK_COMPLETION_INDEX</span>
-                  <span className="font-bold text-cyan-400 font-mono text-base">{profile.stats.highestScore}/10</span>
+                <div className="flex items-center justify-between mb-4">
+                  <Lock className="text-green-400" size={20} />
+                  <span className="text-[9px] font-mono text-gray-500">ANALYZER_01</span>
                 </div>
-
-                <ProgressBar
-                  aria-label="Peak Completion Index"
-                  value={profile.stats.highestScore * 10}
-                  className="w-full mt-1.5"
-                >
-                  <ProgressBar.Track className="bg-black/45 border border-white/5 h-2.5 rounded-full overflow-hidden">
-                    <ProgressBar.Fill className="bg-gradient-to-r from-cyan-600 to-cyan-400 h-full" />
-                  </ProgressBar.Track>
-                </ProgressBar>
+                <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider">Password Entropy</h3>
+                <p className="text-xs text-gray-400 mt-2 font-sans leading-relaxed">
+                  Analyze password complexity patterns and guess resistance algorithms.
+                </p>
               </div>
+              <Link 
+                href="/tools/password-analyzer"
+                className="mt-4 text-xs font-mono font-bold text-green-400 hover:text-green-300 flex items-center gap-1 uppercase"
+              >
+                <span>Deploy Module</span>
+                <span>→</span>
+              </Link>
+            </div>
 
+            <div className="glass-card p-6 flex flex-col justify-between min-h-[180px] relative group hover:border-green-500/20 transition duration-300">
               <div>
-                <div className="flex justify-between mb-2 text-sm">
-                  <span className="text-gray-400">AVG_QUIZ_SECURITY_RATING</span>
-                  <span className="font-bold text-green-400 font-mono text-base">{profile.stats.averageScore}%</span>
+                <div className="flex items-center justify-between mb-4">
+                  <GraduationCap className="text-yellow-400" size={20} />
+                  <span className="text-[9px] font-mono text-gray-500">EVAL_01</span>
                 </div>
-
-                <ProgressBar
-                  aria-label="Average Quiz Security Rating"
-                  value={profile.stats.averageScore}
-                  className="w-full mt-1.5"
-                >
-                  <ProgressBar.Track className="bg-black/45 border border-white/5 h-2.5 rounded-full overflow-hidden">
-                    <ProgressBar.Fill className="bg-gradient-to-r from-green-600 to-green-400 h-full" />
-                  </ProgressBar.Track>
-                </ProgressBar>
+                <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider">Tactical Quizzes</h3>
+                <p className="text-xs text-gray-400 mt-2 font-sans leading-relaxed">
+                  Evaluate your cyber safety defense scores by solving active awareness scenarios.
+                </p>
               </div>
+              <Link 
+                href="/quiz"
+                className="mt-4 text-xs font-mono font-bold text-green-400 hover:text-green-300 flex items-center gap-1 uppercase"
+              >
+                <span>Deploy Module</span>
+                <span>→</span>
+              </Link>
             </div>
           </div>
-
-          {/* BENTO QUICK ACCESS TOOLS */}
-          <div className="lg:col-span-2 grid sm:grid-cols-2 gap-4">
-            
-            <Link
-              href="/tools/url-checker"
-              className="group glass-card p-6 flex flex-col justify-between hover:scale-[1.02] hover:border-green-500/25 transition duration-300 shadow-md hover:shadow-green-500/5"
-            >
-              <div className="flex justify-between items-start">
-                <Link2 className="text-blue-400 group-hover:scale-110 transition-transform duration-300" size={24} />
-                <span className="text-xs font-mono text-gray-400 border border-white/5 px-2 py-0.5 rounded uppercase">SCANNER_01</span>
-              </div>
-              <div className="mt-8">
-                <h3 className="font-bold text-white font-mono text-lg">URL Threat Scanner</h3>
-                <p className="text-sm text-gray-300 mt-2 leading-relaxed font-mono">
-                  Inspect suspected hyperlinks against real-time domain risk tables.
-                </p>
-              </div>
-            </Link>
-
-            <Link
-              href="/tools/email-checker"
-              className="group glass-card p-6 flex flex-col justify-between hover:scale-[1.02] hover:border-green-500/25 transition duration-300 shadow-md hover:shadow-green-500/5"
-            >
-              <div className="flex justify-between items-start">
-                <Mail className="text-cyan-400 group-hover:scale-110 transition-transform duration-300" size={24} />
-                <span className="text-xs font-mono text-gray-400 border border-white/5 px-2 py-0.5 rounded uppercase">SCANNER_02</span>
-              </div>
-              <div className="mt-8">
-                <h3 className="font-bold text-white font-mono text-lg">Email Risk Analyzer</h3>
-                <p className="text-sm text-gray-300 mt-2 leading-relaxed font-mono">
-                  Verify routing headers, DKIM configurations, and SPF flags.
-                </p>
-              </div>
-            </Link>
-
-            <Link
-              href="/tools/password-analyzer"
-              className="group glass-card p-6 flex flex-col justify-between hover:scale-[1.02] hover:border-green-500/25 transition duration-300 shadow-md hover:shadow-green-500/5"
-            >
-              <div className="flex justify-between items-start">
-                <Lock className="text-green-400 group-hover:scale-110 transition-transform duration-300" size={24} />
-                <span className="text-xs font-mono text-gray-400 border border-white/5 px-2 py-0.5 rounded uppercase">ANALYZER_01</span>
-              </div>
-              <div className="mt-8">
-                <h3 className="font-bold text-white font-mono text-lg">Password Entropy Hub</h3>
-                <p className="text-sm text-gray-300 mt-2 leading-relaxed font-mono">
-                  Compute computational password strength and guess-resistance scores.
-                </p>
-              </div>
-            </Link>
-
-            <Link
-              href="/learn"
-              className="group glass-card p-6 flex flex-col justify-between hover:scale-[1.02] hover:border-green-500/25 transition duration-300 shadow-md hover:shadow-green-500/5"
-            >
-              <div className="flex justify-between items-start">
-                <GraduationCap className="text-purple-400 group-hover:scale-110 transition-transform duration-300" size={24} />
-                <span className="text-xs font-mono text-gray-400 border border-white/5 px-2 py-0.5 rounded uppercase">LEARN_MODULE</span>
-              </div>
-              <div className="mt-8">
-                <h3 className="font-bold text-white font-mono text-lg">Learning Center Guide</h3>
-                <p className="text-sm text-gray-300 mt-2 leading-relaxed font-mono">
-                  Review bite-sized chapters explaining attack frameworks.
-                </p>
-              </div>
-            </Link>
-
-          </div>
-
         </section>
 
       </main>

@@ -22,6 +22,8 @@ export interface UserProfile {
   stats: UserStats;
   activities: ActivityLog[];
   createdAt: string;
+  learnProgress?: number;
+  photoURL?: string;
 }
 
 export async function getUserRole(uid: string): Promise<string> {
@@ -60,6 +62,7 @@ export async function saveUserProfile(uid: string, username: string, email: stri
       }
     ],
     createdAt: new Date().toISOString(),
+    learnProgress: 0,
   };
 
   await setDoc(ref, initialProfile);
@@ -140,4 +143,34 @@ export async function updateUserQuizScore(uid: string, score: number, quizTitle:
     stats: updatedStats,
     activities: updatedActivities,
   });
+}
+
+export async function getUserLearnProgress(uid: string): Promise<number> {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return 0;
+  return snap.data().learnProgress ?? 0;
+}
+
+export async function updateUserLearnProgress(uid: string, chapterIndex: number): Promise<void> {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  await updateDoc(ref, {
+    learnProgress: chapterIndex,
+  });
+}
+
+export async function updateUserPhoto(uid: string, photoURL: string): Promise<void> {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  await updateDoc(ref, { photoURL });
+}
+
+export async function updateProfileDetails(uid: string, username: string, email: string): Promise<void> {
+  const ref = doc(db, "users", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+  await updateDoc(ref, { username, email });
 }

@@ -58,7 +58,18 @@ export function isExcludedRoute(
 /* CAN SHOW POPUP */
 /* -------------------------------- */
 
+// Configuration to toggle simulation popups globally
+const ENABLE_SIMULATION_POPUPS = false;
+
+/* -------------------------------- */
+/* CAN SHOW POPUP */
+/* -------------------------------- */
+
 export function canShowPopup() {
+  if (!ENABLE_SIMULATION_POPUPS) {
+    return false;
+  }
+
   const now = Date.now();
 
   // limit session popup count
