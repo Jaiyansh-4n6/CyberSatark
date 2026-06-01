@@ -16,7 +16,8 @@ import {
   User as UserIcon,
   BookOpen,
   Info,
-  ShieldCheck
+  ShieldCheck,
+  BugOff
 } from "lucide-react";
 
 export default function Navbar() {
@@ -129,6 +130,7 @@ export default function Navbar() {
     { name: "Phishing Analyzer", desc: "Scan email contents", href: "/tools/phishing-analysis", icon: Shield, color: "text-red-400" },
     { name: "Email Risk Audit", desc: "Audit SPF/DKIM flags", href: "/tools/email-checker", icon: Mail, color: "text-cyan-400" },
     { name: "Password Entropy", desc: "Compute code strength", href: "/tools/password-analyzer", icon: Lock, color: "text-green-400" },
+    { name: "Threat Intelligence", desc: "Inspect file hashes & IPs", href: "/tools/threat-intelligence", icon: BugOff, color: "text-purple-400" },
   ];
 
   return (
