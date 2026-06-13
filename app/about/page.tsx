@@ -15,7 +15,7 @@ export default function AboutPage() {
     },
     {
       name: "Jaiyansh Dhaulakhandi",
-      github: "https://github.com/Jaiyansh12",
+      github: "https://github.com/Jaiyansh-4n6",
       linkedin: "https://www.linkedin.com/in/jaiyansh-4n6/",
       comPort: "COM_PORT_02",
     },
