@@ -141,7 +141,7 @@ Thanks to the following creators for building CyberSatark:
 | Contributor | GitHub Profile | Role |
 | :--- | :--- | :--- |
 | **Abhinav Mishra** | [@NotSoAbhinav](https://github.com/NotSoAbhinav) | Full Stack & Systems Integration |
-| **Jaiyansh Dhaulakhandi** | [@Jaiyansh12](https://github.com/Jaiyansh12) | Frontend Lead & UX Developer |
+| **Jaiyansh Dhaulakhandi** | [@Jaiyansh-4n6](https://github.com/Jaiyansh-4n6) | Frontend Lead & UX Developer |
 | **Piyush Kumar** | [@piyushkumar-git](https://github.com/piyushkumar-git) | Database & Auth Integration |
 | **Ritambhar Advait** | [@RitambharAdvait](https://github.com/RitambharAdvait) | Tooling & Password Entropy Algorithmist |
 
